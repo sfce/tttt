@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">短信净化器</string>
+    <string name="intercepted_list">已拦截短信</string>
 </resources>

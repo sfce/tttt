@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 public class HomeActivity extends BaseActivity {
     public HomeActivity() {
-        super(R.string.app_name);
+        super(R.string.intercepted_list);
     }
 
     /**
