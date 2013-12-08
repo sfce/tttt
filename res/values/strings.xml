@@ -2,4 +2,6 @@
 <resources>
     <string name="app_name">短信净化器</string>
     <string name="intercepted_list">已拦截短信</string>
+    <string name="black_list">黑名单</string>
+    <string name="white_list">白名单</string>
 </resources>
