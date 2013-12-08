@@ -2,7 +2,7 @@ package us.cmcc.sms.cleaner;
 
 import android.os.Bundle;
 
-public class HomeActivity extends BaseActivity {
+public class HomeActivity extends BaseSlidingMenuActivity {
     public HomeActivity() {
         super(R.string.intercepted_list);
     }

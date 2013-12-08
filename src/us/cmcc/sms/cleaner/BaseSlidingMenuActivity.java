@@ -8,12 +8,12 @@ import com.actionbarsherlock.view.MenuItem;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 
-public class BaseActivity extends SlidingFragmentActivity {
+public abstract class BaseSlidingMenuActivity extends SlidingFragmentActivity {
 
 	private int mTitleRes;
 	protected ListFragment mFrag;
 
-	public BaseActivity(int titleRes) {
+	public BaseSlidingMenuActivity(int titleRes) {
 		mTitleRes = titleRes;
 	}
 

@@ -1,6 +1,7 @@
 package us.cmcc.sms.cleaner;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class MenuFragment extends ListFragment {
@@ -24,6 +26,14 @@ public class MenuFragment extends ListFragment {
         adapter.add(new MenuItem("自定义规则", android.R.drawable.ic_menu_search));
         adapter.add(new MenuItem("设置", android.R.drawable.ic_menu_search));
         setListAdapter(adapter);
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        if (position == 1) {
+            startActivity(new Intent(getActivity(), BlackActivity.class));
+        }
     }
 
     private class MenuItem {
