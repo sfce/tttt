@@ -47,6 +47,7 @@ public class RuleAddActivity extends SherlockActivity {
         DaoMaster daoMaster = new DaoMaster(db);
         BlackNumberDao dao = daoMaster.newSession().getBlackNumberDao();
         dao.insert(new BlackNumber(text1.getText().toString(), text2.getText().toString()));
+        finish();
     }
 
     public void cancel(View v) {
