@@ -14,6 +14,7 @@ import com.baidu.mapapi.map.MKEvent;
  * Time: 下午2:53
  */
 public class MyApplication extends Application {
+    public final static String DB_NAME = "SMS";
     public final static String BAIDU_MAP_KEY = "D3515794D0CAA0CC926F9785C8362C281D5738FC";
     public BMapManager mBMapManager = null;
     private static MyApplication mInstance;
