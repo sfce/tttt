@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
     
-	<com.hyrt.ssid.widget.MapViewEx
+	<us.cmcc.sms.cleaner.widget.MapViewEx
 	    android:id="@+id/mapview"
 	    android:clickable="true"
 	    android:layout_width="match_parent"
