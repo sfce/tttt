@@ -20,6 +20,7 @@ public class BlackActivity extends TabFragmentActivity {
 
     @Override
     protected void onExit() {
+        finish();
     }
 
     private final class TabInfo {
