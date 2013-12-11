@@ -1,8 +1,11 @@
 package us.cmcc.sms.cleaner;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import me.sfce.library.activity.TabFragmentActivity;
 import us.cmcc.sms.cleaner.fragment.BlackNumberContainer;
 import us.cmcc.sms.cleaner.fragment.BlackWordContainer;
@@ -16,6 +19,32 @@ import us.cmcc.sms.cleaner.fragment.BlackWordContainer;
 public class BlackActivity extends TabFragmentActivity {
     public BlackActivity() {
         super(R.string.black_list);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.github:
+                int currentTab = getCurrentTab();
+                if (currentTab == 0) {
+                    Intent intent = new Intent(this, RuleAddActivity.class);
+                    intent.putExtra("hint", "电话号码(必填)");
+                    intent.putExtra("inputType", 1);
+                    intent.putExtra("type", "number");
+                    intent.putExtra("business", RuleAddActivity.TYPE_BLACK_NUMBER);
+                    startActivity(intent);
+                } else {
+
+                }
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getSupportMenuInflater().inflate(R.menu.main, menu);
+        return true;
     }
 
     @Override
