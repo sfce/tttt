@@ -15,7 +15,7 @@ public class WhiteWordFilter extends SmsFilter {
     }
 
     @Override
-    public FilterResult doFilter(Sms sms) {
+    public FilterResult doFilter(Context context, Sms sms) {
         return null;
     }
 

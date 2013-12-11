@@ -10,7 +10,7 @@ import us.cmcc.sms.cleaner.bean.Sms;
  * Time: 下午2:38
  */
 public interface ISmsFilter {
-    FilterResult doFilter(Sms sms);
+    FilterResult doFilter(Context context, Sms sms);
 
     void setNext(ISmsFilter filter);
 

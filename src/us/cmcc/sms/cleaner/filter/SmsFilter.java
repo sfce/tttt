@@ -24,7 +24,7 @@ public abstract class SmsFilter implements ISmsFilter {
     @Override
     public boolean dispatch(Context context, Sms sms) {
         if (sizeUp(context)) {
-            FilterResult result = doFilter(sms);
+            FilterResult result = doFilter(context, sms);
             switch (result) {
                 case RED: return true;
                 case GREEN: return false;
