@@ -33,7 +33,7 @@ public abstract class BaseFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    public String uniqueTag(Class<? extends BaseFragment> clazz) {
+    public String uniqueTag(Class<? extends Fragment> clazz) {
         return clazz.getName();
     }
 

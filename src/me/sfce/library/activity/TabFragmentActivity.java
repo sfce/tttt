@@ -97,6 +97,10 @@ public abstract class TabFragmentActivity extends SherlockFragmentActivity {
         mTabHost.setCurrentTab(index);
     }
 
+    protected int getCurrentTab() {
+        return mTabHost.getCurrentTab();
+    }
+
     class FragmentHolder {
         int containerId;
         BaseFragment fragment;
