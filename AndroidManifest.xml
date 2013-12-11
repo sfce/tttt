@@ -45,6 +45,9 @@
                 android:name=".BlackActivity"
                 android:screenOrientation="portrait"/>
         <activity
+                android:name=".RuleAddActivity"
+                android:screenOrientation="portrait"/>
+        <activity
                 android:name=".SettingsActivity"
                 android:screenOrientation="portrait"/>
         <activity
