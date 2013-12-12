@@ -42,6 +42,9 @@
             </intent-filter>
         </activity>
         <activity
+                android:name=".WhiteActivity"
+                android:screenOrientation="portrait"/>
+        <activity
                 android:name=".BlackActivity"
                 android:screenOrientation="portrait"/>
         <activity

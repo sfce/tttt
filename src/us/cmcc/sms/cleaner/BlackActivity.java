@@ -26,15 +26,19 @@ public class BlackActivity extends TabFragmentActivity {
         switch (item.getItemId()) {
             case R.id.github:
                 int currentTab = getCurrentTab();
+                Intent intent = new Intent(this, RuleAddActivity.class);
                 if (currentTab == 0) {
-                    Intent intent = new Intent(this, RuleAddActivity.class);
                     intent.putExtra("hint", "电话号码(必填)");
                     intent.putExtra("inputType", 1);
                     intent.putExtra("type", "number");
                     intent.putExtra("business", RuleAddActivity.TYPE_BLACK_NUMBER);
                     startActivity(intent);
                 } else {
-
+                	intent.putExtra("hint", "关键字(必填)");
+                    intent.putExtra("inputType", 2);
+                    intent.putExtra("type", "word");
+                    intent.putExtra("business", RuleAddActivity.TYPE_BLACK_WORD);
+                    startActivity(intent);
                 }
                 return true;
         }

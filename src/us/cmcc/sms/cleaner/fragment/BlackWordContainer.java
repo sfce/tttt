@@ -11,5 +11,6 @@ import me.sfce.library.activity.BaseContainerFragment;
 public class BlackWordContainer extends BaseContainerFragment {
     @Override
     protected void init() {
+    	 replaceFragment(new BlackWordFragment(), uniqueTag(BlackWordFragment.class), false);
     }
 }
