@@ -8,9 +8,9 @@ import me.sfce.library.activity.BaseContainerFragment;
  * Date: 13-12-8
  * Time: 下午7:26
  */
-public class BlackWordContainer extends BaseContainerFragment {
+public class WhiteNumberContainer extends BaseContainerFragment {
     @Override
     protected void init() {
-    	 replaceFragment(new BlackWordFragment(), uniqueTag(BlackWordFragment.class), false);
+        replaceFragment(new WhiteNumberFragment(), uniqueTag(WhiteNumberFragment.class), false);
     }
 }

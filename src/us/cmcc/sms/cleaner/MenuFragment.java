@@ -36,6 +36,7 @@ public class MenuFragment extends ListFragment {
         super.onListItemClick(l, v, position, id);
         switch (position) {
             case 0:
+            	startActivity(new Intent(getActivity(), WhiteActivity.class));
                 break;
             case 1:
                 startActivity(new Intent(getActivity(), BlackActivity.class));
