@@ -18,3 +18,7 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+-libraryjars D:/myjar/fastjson/fastjson-1.1.33.jar
+# for skyworth fastjson
+-keep class com.alibaba.fastjson.** { *; }
+-keep class com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter
