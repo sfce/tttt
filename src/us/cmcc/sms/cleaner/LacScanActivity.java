@@ -13,6 +13,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockListActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -59,6 +61,7 @@ public class LacScanActivity extends SherlockListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("基站扫描");
+        getSherlock().getActionBar().setDisplayShowHomeEnabled(false);
         setContentView(R.layout.layout_list);
 
         final List<Item> items = new ArrayList<Item>();
@@ -105,5 +108,24 @@ public class LacScanActivity extends SherlockListActivity {
                 adapter.notifyDataSetChanged();
             }
         }, PhoneStateListener.LISTEN_CELL_LOCATION);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.add:
+                new AlertDialog.Builder(this).setMessage("当前显示的是手机所连接基站的LAC（位置区编码）、CID（小区编码）、RSSI（信号强度）\n" +
+                        "以及当前信号范围内最多6个基站的信息")
+                        .setPositiveButton(android.R.string.ok, null).create().show();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getSupportMenuInflater().inflate(R.menu.main, menu);
+        return true;
     }
 }

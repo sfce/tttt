@@ -29,6 +29,7 @@ public class CityLacActivity extends SherlockListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("城市基站");
+        getSherlock().getActionBar().setDisplayShowHomeEnabled(false);
         setContentView(R.layout.layout_list);
         final ArrayList<BaseStation> stations = new ArrayList<BaseStation>();
         for (int i = 0; i < 100; i++) {

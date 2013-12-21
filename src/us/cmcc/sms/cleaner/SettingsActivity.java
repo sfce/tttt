@@ -1,5 +1,6 @@
 package us.cmcc.sms.cleaner;
 
+import android.os.Bundle;
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 
 /**
@@ -9,4 +10,10 @@ import com.actionbarsherlock.app.SherlockPreferenceActivity;
  * Time: 下午11:38
  */
 public class SettingsActivity extends SherlockPreferenceActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getSherlock().getActionBar().setDisplayShowHomeEnabled(false);
+
+    }
 }

@@ -1,5 +1,6 @@
 package us.cmcc.sms.cleaner;
 
+import android.content.Intent;
 import us.cmcc.sms.cleaner.dao.BlackNumber;
 import us.cmcc.sms.cleaner.dao.BlackNumberDao;
 import us.cmcc.sms.cleaner.dao.BlackWord;
@@ -26,7 +27,8 @@ public class RuleAddActivity extends SherlockActivity {
 	public final static int TYPE_WHITE_NUMBER = 2;
 	public final static int TYPE_WHITE_WORD = 3;
 
-	private boolean type;
+    public final static String ACTION_RULE_ADD = "action_rule_add";
+
 	private EditText text1;
 	private EditText text2;
 	private int business;
@@ -34,6 +36,7 @@ public class RuleAddActivity extends SherlockActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        getSherlock().getActionBar().setDisplayShowHomeEnabled(false);
 		setContentView(R.layout.rule_add);
 		text1 = (EditText) findViewById(android.R.id.text1);
 		text2 = (EditText) findViewById(android.R.id.text2);
@@ -42,14 +45,23 @@ public class RuleAddActivity extends SherlockActivity {
 		if (getIntent().getIntExtra("inputType", 0) == 1) {
 			text1.setKeyListener(DigitsKeyListener.getInstance("0123456789.*#"));
 		}
-		type = "number".equals(getIntent().getStringExtra("type"));
 		business = getIntent().getIntExtra("business", 0);
-	}
+        switch (business) {
+            case TYPE_WHITE_NUMBER:
+                setTitle("添加白名单");
+                break;
+            case TYPE_BLACK_NUMBER:
+                setTitle("添加黑名单");
+                break;
+            case TYPE_BLACK_WORD:
+                setTitle("添加关键词");
+                break;
+        }
+    }
 
 	public void save(View v) {
 		// TODO校验
-		DaoMaster.DevOpenHelper dbOpenHelper = new DaoMaster.DevOpenHelper(
-				this, MyApplication.DB_NAME, null);
+		DaoMaster.DevOpenHelper dbOpenHelper = new DaoMaster.DevOpenHelper(this, MyApplication.DB_NAME, null);
 		SQLiteDatabase db = dbOpenHelper.getReadableDatabase();
 		DaoMaster daoMaster = new DaoMaster(db);
 
@@ -58,7 +70,6 @@ public class RuleAddActivity extends SherlockActivity {
 			BlackNumberDao blackNumberDao = daoMaster.newSession().getBlackNumberDao();
 			blackNumberDao.insert(new BlackNumber(text1.getText().toString(), text2.getText().toString()));
 			break;
-			
 		case TYPE_BLACK_WORD:
 			BlackWordDao blackWordDao = daoMaster.newSession().getBlackWordDao();
 			blackWordDao.insert(new BlackWord(text1.getText().toString(), text2.getText().toString()));
@@ -72,7 +83,7 @@ public class RuleAddActivity extends SherlockActivity {
 			whiteWordDao.insert(new WhiteWord(text1.getText().toString(), text2.getText().toString()));
 			break;
 		}
-
+        sendBroadcast(new Intent(ACTION_RULE_ADD));
 		finish();
 	}
 	

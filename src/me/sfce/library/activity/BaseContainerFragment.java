@@ -27,9 +27,6 @@ public abstract class BaseContainerFragment extends BaseFragment {
 
     public void replaceFragment(Fragment fragment, String tag, boolean add2BackStack) {
         TabFragmentActivity host = (TabFragmentActivity) getActivity();
-        if (host.mStopped) {
-            return;
-        }
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.replace(android.R.id.content, fragment, tag);
         if (add2BackStack) {

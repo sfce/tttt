@@ -1,33 +1,29 @@
 package me.sfce.library.activity;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.TabHost;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import me.sfce.library.widget.FixedFragmentTabHost;
 import us.cmcc.sms.cleaner.R;
 
 /**
  * Created with IntelliJ IDEA.
  * User: sfce
- * Date: 13-10-17
- * Time: 下午4:55
+ * Date: 13-12-14
+ * Time: 下午4:31
  */
-public abstract class TabFragmentActivity extends SherlockFragmentActivity {
+public abstract class BaseSlidingMenuTabFragmentActivity extends BaseSlidingMenuActivity {
     protected FixedFragmentTabHost mTabHost;
     protected FragmentTabAdapter mAdapter;
-    private int mTitleRes;
 
-    protected TabFragmentActivity(int mTitleRes) {
-        this.mTitleRes = mTitleRes;
+    public BaseSlidingMenuTabFragmentActivity(int titleRes) {
+        super(titleRes);
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(mTitleRes);
-        getSherlock().getActionBar().setDisplayShowHomeEnabled(false);
-
         setContentView(getContentView());
         setupTabHost();
     }
@@ -48,8 +44,11 @@ public abstract class TabFragmentActivity extends SherlockFragmentActivity {
                 @Override
                 public void onClick(View v) {
                     if (index == mTabHost.getCurrentTab()) {
-                        BaseContainerFragment containerFragment = (BaseContainerFragment) getSupportFragmentManager().findFragmentByTag(tag);
-                        containerFragment.clearBackStack();
+                        Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
+                        if (fragment instanceof BaseContainerFragment) {
+                            ((BaseContainerFragment) fragment).clearBackStack();
+
+                        }
                     } else {
                         mTabHost.setCurrentTab(index);
                     }
@@ -59,9 +58,9 @@ public abstract class TabFragmentActivity extends SherlockFragmentActivity {
         mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
-                TabFragmentActivity.this.onTabChanged(mTabHost.getCurrentTab());
-                BaseContainerFragment containerFragment = (BaseContainerFragment) getSupportFragmentManager().findFragmentByTag(tabId);
-                if (null != containerFragment) {
+                BaseSlidingMenuTabFragmentActivity.this.onTabChanged(mTabHost.getCurrentTab());
+                Fragment fragment = getSupportFragmentManager().findFragmentByTag(tabId);
+                if (fragment instanceof BaseContainerFragment && null != fragment) {
                     // TODO
                 }
             }
@@ -88,8 +87,13 @@ public abstract class TabFragmentActivity extends SherlockFragmentActivity {
     @Override
     public void onBackPressed() {
         int index = mTabHost.getCurrentTab();
-        BaseContainerFragment container = (BaseContainerFragment) getSupportFragmentManager().findFragmentByTag(mAdapter.getTag(index));
-        if (!container.popFragment()) {
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(mAdapter.getTag(index));
+        if (fragment instanceof BaseContainerFragment) {
+            BaseContainerFragment container = (BaseContainerFragment) fragment;
+            if (!container.popFragment()) {
+                onExit();
+            }
+        } else {
             onExit();
         }
     }

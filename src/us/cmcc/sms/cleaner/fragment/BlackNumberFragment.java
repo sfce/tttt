@@ -26,7 +26,6 @@ import java.util.List;
  * Time: 下午8:03
  */
 public class BlackNumberFragment extends ListFragment {
-
     private BlackNumberDao dao;
     private List<BlackNumber> blackNumbers;
 

@@ -1,15 +1,13 @@
 package us.cmcc.sms.cleaner;
 
+import android.content.Intent;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+import me.sfce.library.activity.BaseTextFragmentTabAdapter;
+import me.sfce.library.activity.FragmentTabAdapter;
 import me.sfce.library.activity.TabFragmentActivity;
 import us.cmcc.sms.cleaner.fragment.WhiteNumberContainer;
 import us.cmcc.sms.cleaner.fragment.WhiteWordContainer;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
-
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 
 /**
  * 白名单处理
@@ -22,7 +20,7 @@ public class WhiteActivity extends TabFragmentActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.github:
+            case R.id.add:
                 int currentTab = getCurrentTab();
                 Intent intent = new Intent(this, RuleAddActivity.class);
                 if (currentTab == 0) {
@@ -67,45 +65,12 @@ public class WhiteActivity extends TabFragmentActivity {
     }
 
     @Override
-    protected TabAdapter getTabAdapter() {
-        final TabInfo[] tabs = new TabInfo[]{
-                new TabInfo("手机号", R.drawable.abs__ic_go, WhiteNumberContainer.class),
-                new TabInfo("关键词", R.drawable.abs__ic_go, WhiteWordContainer.class)
-        };
-        return new TabAdapter() {
-            @Override
-            public int getCount() {
-                return tabs.length;
-            }
-
-            @Override
-            public String getTag(int index) {
-                return tabs[index].tag;
-            }
-
-            @Override
-            public View getIndicator(int index) {
-                View view = View.inflate(WhiteActivity.this, R.layout.main_tab, null);
-                TextView text = (TextView) view.findViewById(android.R.id.text1);
-                text.setText(getTag(index));
-                text.setCompoundDrawablesWithIntrinsicBounds(0, tabs[index].icon, 0, 0);
-                return view;
-            }
-
-            @Override
-            public Class<?> getClass(int index) {
-                return tabs[index].clazz;
-            }
-
-            @Override
-            public Bundle getArguments(int index) {
-                return null;
-            }
-        };
+    protected FragmentTabAdapter getTabAdapter() {
+        return new BaseTextFragmentTabAdapter(this, new Class[] { WhiteNumberContainer.class, WhiteWordContainer.class}, new String[] {"手机号", "关键词"});
     }
 
     @Override
     protected int getContentView() {
-        return R.layout.black;
+        return 0;
     }
 }

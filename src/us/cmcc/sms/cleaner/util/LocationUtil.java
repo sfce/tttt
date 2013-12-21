@@ -1,14 +1,11 @@
 package us.cmcc.sms.cleaner.util;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import us.cmcc.sms.cleaner.MapActivity;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,12 +13,23 @@ import us.cmcc.sms.cleaner.MapActivity;
  * Date: 13-12-10
  * Time: 下午9:48
  */
-public class LocationListenner implements BDLocationListener {
+public class LocationUtil implements BDLocationListener {
     ProgressDialog loading;
     Context context;
     private LocationClient mLocClient;
+    LocationListener listener;
 
-    public LocationListenner(Context context) {
+    public LocationUtil setListener(LocationListener listener) {
+        this.listener = listener;
+        mLocClient.start();
+        return this;
+    }
+
+    public void start() {
+        mLocClient.requestLocation();
+    }
+
+    public LocationUtil(Context context, String loadingMsg) {
         this.context = context;
         mLocClient = new LocationClient(context);
         mLocClient.registerLocationListener(this);
@@ -29,23 +37,20 @@ public class LocationListenner implements BDLocationListener {
         option.setPriority(LocationClientOption.NetWorkFirst);
         option.setCoorType("bd09ll"); // 设置坐标类型
         mLocClient.setLocOption(option);
-        mLocClient.start();
-        loading = ProgressDialog.show(context, "", "正在获取位置信息...");
+        if (null != loadingMsg)
+            loading = ProgressDialog.show(context, "", loadingMsg);
     }
 
     @Override
     public void onReceiveLocation(BDLocation location) {
-        loading.dismiss();
+        if (null != loading)
+            loading.dismiss();
+        mLocClient.stop();
         if (location == null) {
-            new AlertDialog.Builder(context)
-                    .setTitle("提示").setMessage("定位失败")
-                    .setPositiveButton(android.R.string.ok, null).create().show();
+            listener.onLocationResult(false, null);
             return;
         }
-        mLocClient.stop();
-        Intent intent = new Intent(context, MapActivity.class);
-        intent.putExtra("location", String.format("%f,%f", location.getLatitude(), location.getLongitude()));
-        context.startActivity(intent);
+        listener.onLocationResult(true, String.format("%f,%f", location.getLatitude(), location.getLongitude()));
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import com.actionbarsherlock.internal.widget.IcsToast;
+import me.sfce.library.Global;
+import me.sfce.library.activity.BaseSlidingMenuActivity;
 
 public class MenuFragment extends ListFragment {
 
@@ -20,43 +24,68 @@ public class MenuFragment extends ListFragment {
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    IcsToast.makeText(getActivity(), "back", IcsToast.LENGTH_LONG).show();
+                }
+                return false;
+            }
+        });
         MenuAdapter adapter = new MenuAdapter(getActivity());
         adapter.add(new MenuItem("白名单", android.R.drawable.ic_menu_search));
         adapter.add(new MenuItem("黑名单", android.R.drawable.ic_menu_search));
+        adapter.add(new MenuItem("关键词", android.R.drawable.ic_menu_search));
         adapter.add(new MenuItem("设置", android.R.drawable.ic_menu_search));
-        adapter.add(new MenuItem("基站扫描", android.R.drawable.ic_menu_search));
-        adapter.add(new MenuItem("城市基站", android.R.drawable.ic_menu_search));
-        adapter.add(new MenuItem("可疑动态", android.R.drawable.ic_menu_search));
-        adapter.add(new MenuItem("假基站追踪", android.R.drawable.ic_menu_search));
+        adapter.add(new MenuItem("我的基站", android.R.drawable.ic_menu_search));
+//        adapter.add(new MenuItem("城市基站", android.R.drawable.ic_menu_search));
+//        adapter.add(new MenuItem("可疑动态", android.R.drawable.ic_menu_search));
+        adapter.add(new MenuItem("版本升级", android.R.drawable.ic_menu_search));
         setListAdapter(adapter);
     }
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
+        Intent intent;
         switch (position) {
             case 0:
-            	startActivity(new Intent(getActivity(), WhiteActivity.class));
+                intent = new Intent(getActivity(), RuleListActivity.class);
+                intent.putExtra("type", RuleAddActivity.TYPE_WHITE_NUMBER);
+            	startActivity(intent);
                 break;
             case 1:
-                startActivity(new Intent(getActivity(), BlackActivity.class));
+                intent = new Intent(getActivity(), RuleListActivity.class);
+                intent.putExtra("type", RuleAddActivity.TYPE_BLACK_NUMBER);
+                startActivity(intent);
                 break;
             case 2:
-                startActivity(new Intent(getActivity(), SettingsActivity.class));
+                intent = new Intent(getActivity(), RuleListActivity.class);
+                intent.putExtra("type", RuleAddActivity.TYPE_BLACK_WORD);
+                startActivity(intent);
                 break;
             case 3:
-                startActivity(new Intent(getActivity(), LacScanActivity.class));
+                intent = new Intent(getActivity(), SettingsActivity.class);
+                startActivity(intent);
                 break;
             case 4:
-                startActivity(new Intent(getActivity(), CityLacActivity.class));
+                intent = new Intent(getActivity(), LacScanActivity.class);
+                startActivity(intent);
                 break;
-            case 5:
-                startActivity(new Intent(getActivity(), SuspiciousNewsActivity.class));
+            case 7:
+                intent = new Intent(getActivity(), CityLacActivity.class);
+                startActivity(intent);
                 break;
             case 6:
-                startActivity(new Intent(getActivity(), FakeTrackActivity.class));
+                intent = new Intent(getActivity(), SuspiciousNewsActivity.class);
+                startActivity(intent);
+                break;
+            case 5:
+                Global.Update.checkNewVersion(getActivity(), false);
                 break;
         }
+        getActivity().sendBroadcast(new Intent(BaseSlidingMenuActivity.ACTION_HIDE_MENU));
     }
 
     private class MenuItem {
@@ -86,6 +115,5 @@ public class MenuFragment extends ListFragment {
 
             return convertView;
         }
-
     }
 }

@@ -31,6 +31,14 @@ public class BlackNumber {
         this.number = number;
         this.mark = mark;
     }
+    @Override
+    public String toString() {
+        if (TextUtils.isEmpty(mark)) {
+            return number;
+        } else {
+            return mark + "(" + number + ")";
+        }
+    }
 
     public Long getId() {
         return id;
@@ -58,9 +66,4 @@ public class BlackNumber {
         this.mark = mark;
     }
 
-    @Override
-    public String toString() {
-        if (TextUtils.isEmpty(mark)) return number;
-        else return mark + "("  + number + ")";
-    }
 }
